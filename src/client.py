@@ -5,6 +5,19 @@ import asyncio
 from faker import Faker
 from faker.providers.person.ru_RU import Provider
 
+
+
+
+async def connect_to_server():
+    async with websockets.connect("ws://localhost:8765") as websocket:
+        await websocket.send("Hello, Server!")
+        response = await websocket.recv()
+        print(f"Received: {response}")
+
+asyncio.get_event_loop().run_until_complete(connect_to_server())
+
+
+"""
 # создание объекта Faker с локализацией для России
 fake = Faker('ru_RU')
 fake.add_provider(Provider)
@@ -38,3 +51,4 @@ async def send_message():
 
 # Запуск корутины send_message() с учетом уже запущенного цикла событий
 asyncio.get_event_loop().run_until_complete(send_message())
+"""

@@ -8,15 +8,19 @@ import random
 
 async def echo(websocket, path):
     async for message in websocket:
+        print(f"sended message: {message}")
         await websocket.send(message)
 
-loop = asyncio.new_event_loop()   # <-- create new loop in this thread here
-asyncio.set_event_loop(loop)      # no 'get_event_loop' !
-    
-start_server = websockets.serve(echo, "localhost", 8765)
-loop.run_until_complete(start_server)
-loop.run_forever()
+#start_server = websockets.serve(echo, "localhost", 8765)
+#asyncio.get_event_loop().run_until_complete(start_server)
+#asyncio.get_event_loop().run_forever()
+async def main():
+    server = await websockets.serve(echo, "localhost", 8765)
+    print("server runs on ws://localhost:8765")
+    await server.wait_closed()
 
+asyncio.run(main())
+    
 """
 #назначаем порт на локалхосте
 port = 1000
@@ -50,6 +54,17 @@ asyncio.get_event_loop().run_forever()
 
 
 
+
+async def echo(websocket, path):
+    async for message in websocket:
+        await websocket.send(message)
+
+loop = asyncio.new_event_loop()   # <-- create new loop in this thread here
+asyncio.set_event_loop(loop)      # no 'get_event_loop' !
+    
+start_server = websockets.serve(echo, "localhost", 8765)
+loop.run_until_complete(start_server)
+loop.run_forever()
 
 
 async def handler(websocket):
