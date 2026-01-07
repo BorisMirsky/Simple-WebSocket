@@ -24,8 +24,8 @@
 1. Переходим в Simple-WebSocket\myvenv\Scripts, в CLI выполняем:
    activate
 
-2. Так получилось, что в качестве редактора кода для Python предпочитаю IDLE.
-   Заводим IDLE:
+2. В качестве редактора кода для Python предпочитаю IDLE.
+   В папке src:
    python -m idlelib.idle
 
   

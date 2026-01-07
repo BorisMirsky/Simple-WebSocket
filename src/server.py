@@ -6,24 +6,8 @@ from faker.providers.person.ru_RU import Provider
 import random
 
 
-async def echo(websocket, path):
-    async for message in websocket:
-        print(f"sended message: {message}")
-        await websocket.send(message)
-
-#start_server = websockets.serve(echo, "localhost", 8765)
-#asyncio.get_event_loop().run_until_complete(start_server)
-#asyncio.get_event_loop().run_forever()
-async def main():
-    server = await websockets.serve(echo, "localhost", 8765)
-    print("server runs on ws://localhost:8765")
-    await server.wait_closed()
-
-asyncio.run(main())
-    
-"""
 #назначаем порт на локалхосте
-port = 1000
+port = 1000    # 8765
 
 # создание объекта Faker с локализацией для России
 fake = Faker('ru_RU')
@@ -46,71 +30,16 @@ async def handler(websocket, path):
         print("Соединение закрыто")
 
 # объявляем сервер
-start_server = websockets.serve(handler, "localhost", port)
+#start_server = websockets.serve(handler, "localhost", port)
 
 # запускаем сервер
-asyncio.get_event_loop().run_until_complete(start_server)
-asyncio.get_event_loop().run_forever()
+#asyncio.get_event_loop().run_until_complete(start_server)
+#asyncio.get_event_loop().run_forever()
+def start_server_sync():
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    start_server = websockets.serve(handler, "localhost", port)
+    loop.run_until_complete(start_server)
+    loop.run_forever()
 
-
-
-
-async def echo(websocket, path):
-    async for message in websocket:
-        await websocket.send(message)
-
-loop = asyncio.new_event_loop()   # <-- create new loop in this thread here
-asyncio.set_event_loop(loop)      # no 'get_event_loop' !
-    
-start_server = websockets.serve(echo, "localhost", 8765)
-loop.run_until_complete(start_server)
-loop.run_forever()
-
-
-async def handler(websocket):
-    while True:
-        try:
-            message = await websocket.recv()
-            print('Message received from client: ', message)
-            await websocket.send("Message from server: " + message)
-        except Exception as e:
-            print(e)
-            break
-
-async def main():
-    async with websockets.serve(handler, "", 8001):  # listen at port 8001
-        await asyncio.Future()                       # run forever
-
-if __name__ == "__main__":
-    asyncio.run(main())
-
-#############################
-
-
-connected_clients = set()
-
-async def handle_client(websocket, path):
-    # Add the new client to the set of connected clients
-    connected_clients.add(websocket)
-    try:
-        # Listen for messages from the client
-        async for message in websocket:
-            # Broadcast the message to all other connected clients
-            for client in connected_clients:
-                if client != websocket:
-                    await client.send(message)
-    except websockets.exceptions.ConnectionClosed:
-        pass
-    finally:
-        # Remove the client from the set of connected clients
-        connected_clients.remove(websocket)
-
-async def main():
-    server = await websockets.serve(handle_client, 'localhost', 12345)
-    await server.wait_closed()
-
-if __name__ == "__main__":
-    asyncio.run(main())
-
-
-"""
+start_server_sync()

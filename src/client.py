@@ -30,6 +30,8 @@ async def receive_message(websocket):
     except websockets.ConnectionClosed:
         print("Соединение закрыто")
 
+
+
 # асинхронная функция отправки сообщения на сервер
 async def send_message():
     uri = "ws://localhost:1000"
