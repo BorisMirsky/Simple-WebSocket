@@ -4,17 +4,7 @@ import websockets
 import asyncio
 from faker import Faker
 from faker.providers.person.ru_RU import Provider
-
-
-
-
-async def connect_to_server():
-    async with websockets.connect("ws://localhost:8765") as websocket:
-        await websocket.send("Hello, Server!")
-        response = await websocket.recv()
-        print(f"Received: {response}")
-
-asyncio.get_event_loop().run_until_complete(connect_to_server())
+from websockets.asyncio.client import connect
 
 
 """
@@ -54,3 +44,17 @@ async def send_message():
 # Запуск корутины send_message() с учетом уже запущенного цикла событий
 asyncio.get_event_loop().run_until_complete(send_message())
 """
+
+
+async def hello():
+    async with connect("ws://127.0.0.1:1000") as websocket:
+        await websocket.send("Hello world!")
+        message = await websocket.recv()
+        print(message)
+
+
+if __name__ == "__main__":
+    asyncio.run(hello())
+
+
+    

@@ -20,6 +20,10 @@
 
 ###################################
 
+check port  PSh
+Test-NetConnection -ComputerName "localhost" -Port 8765
+
+
 Как пользоваться
 1. Переходим в Simple-WebSocket\myvenv\Scripts, в CLI выполняем:
    activate
