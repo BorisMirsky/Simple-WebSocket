@@ -1,6 +1,6 @@
 Библиотеки:
 - websockets - для небольших проектов, 
-- aiohttp — более тяжёлая и функциональная, позволяет совмещать HTTP и websocket 
+- aiohttp — относитильно тяжёлая и функциональная, позволяет совмещать HTTP и websocket 
 
 
 Плюсы веб сокетов
@@ -20,17 +20,18 @@
 
 ###################################
 
-check port  PSh
-Test-NetConnection -ComputerName "localhost" -Port 8765
-
-
 Как пользоваться
 1. Переходим в Simple-WebSocket\myvenv\Scripts, в CLI выполняем:
    activate
 
-2. В качестве редактора кода для Python предпочитаю IDLE.
-   В папке src:
+2. В качестве редактора кода для простых случаев использую IDLE.
+   Вызов из папки src:
    python -m idlelib.idle
+
+3. Запуск
+   Нужны 2 окна терминала (cmd, psh). В обоих запускаем вирт. окружение и переходим в папку src.
+   - python server.py
+   - python client.py
 
   
 
